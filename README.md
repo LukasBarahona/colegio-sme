@@ -96,6 +96,8 @@ Pedido por Lukas después de la primera versión fiel a Figma:
 - **Collage en el Inicio:** reemplaza la foto suelta de la comunidad; las fotos se descubren en cascada.
 - **Animaciones:** títulos, tarjetas y bloques aparecen al llegar a la vista, una sola vez, y luego quedan quietos. Las barras de cifras crecen, «+250» cuenta hacia arriba y los conectores del diagrama se dibujan. Nada se anima si la persona pidió reducir el movimiento.
 - **Estética:** todos los botones en forma de píldora, títulos con acento dorado, fondos alternos blanco y gris azulado, paneles azules con degradado y tarjetas con sombra suave.
+- **Pantalla completa en el Inicio (computador):** cada sección cabe completa bajo el encabezado; los espacios y las fotos se ajustan al alto de la pantalla. El collage mide justo lo que queda bajo el encabezado. Se comprobó en 1280×720, 1366×657, 1536×683 y 1912×843.
+- **Rendimiento:** las animaciones solo mueven opacidad y posición (`transform`), que la tarjeta gráfica resuelve sin repintar. El encabezado no cambia de alto al bajar, el desenfoque es liviano y se apaga pasada la portada, y el scroll no mide la página en cada movimiento.
 - [PROPUESTA] Los textos nuevos del collage («Vida escolar» y «Una comunidad que se construye cada día») y el rótulo sobre el título de la portada no están en Figma: hay que validarlos con el colegio.
 
 ## Decisiones de la programación

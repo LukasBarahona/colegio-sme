@@ -4,7 +4,6 @@
 
   var root = document.documentElement;
   var header = document.getElementById("site-header");
-  var headerMain = header.querySelector(".header-main");
   var announcement = document.getElementById("announcement");
   var closeAnnouncement = document.getElementById("announcement-close");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -12,28 +11,36 @@
   /* =======================================================
      Encabezado fijo
      ======================================================= */
-  // Alto del encabezado sin achicar (--hdr-h en diseno.css) + barra de admisión.
-  // Se usa para dejar espacio arriba en la portada y en los encabezados de página.
-  function cssPx(name, fallback) {
-    var v = parseFloat(getComputedStyle(root).getPropertyValue(name));
-    return isNaN(v) ? fallback : v;
-  }
+  // Alto real del encabezado (barra de admisión + menú + borde). Se usa para dejar
+  // espacio arriba en la portada, en los encabezados de página y en el collage.
+  // El encabezado no cambia de alto al bajar, así que basta con medirlo.
   function syncHeaderHeight() {
-    var main = cssPx("--hdr-h", headerMain.offsetHeight);
-    var aviso = announcement && !announcement.hidden ? cssPx("--aviso-h", announcement.offsetHeight) : 0;
-    root.style.setProperty("--header-h", (main + aviso) + "px");
+    root.style.setProperty("--header-h", header.offsetHeight + "px");
   }
 
-  // Al bajar, el encabezado se achica y se vuelve más sólido después de la portada
+  // Al bajar, el encabezado se oscurece y se vuelve casi sólido después de la portada.
+  // Las medidas se toman solo al cargar y al cambiar el tamaño (no en cada scroll),
+  // y las clases se actualizan como máximo una vez por cuadro.
   var cover = document.querySelector(".hero, .page-header");
-  function onScroll() {
-    var y = window.scrollY || window.pageYOffset;
-    header.classList.toggle("is-scrolled", y > 24);
-    var limit = cover ? cover.offsetHeight - header.offsetHeight : 0;
-    header.classList.toggle("is-solid", y > Math.max(limit, 24));
+  var solidFrom = 24, ticking = false, lastScrolled = null, lastSolid = null;
+  function measure() {
+    solidFrom = Math.max(24, cover ? cover.offsetHeight - header.offsetHeight : 0);
   }
+  function applyScroll() {
+    ticking = false;
+    var y = window.scrollY || window.pageYOffset;
+    var scrolled = y > 24, solid = y > solidFrom;
+    if (scrolled !== lastScrolled) { header.classList.toggle("is-scrolled", scrolled); lastScrolled = scrolled; }
+    if (solid !== lastSolid) { header.classList.toggle("is-solid", solid); lastSolid = solid; }
+  }
+  function onScroll() {
+    if (!ticking) { ticking = true; requestAnimationFrame(applyScroll); }
+  }
+  measure();
+  applyScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  window.addEventListener("resize", function () { measure(); onScroll(); });
+  window.addEventListener("load", function () { measure(); onScroll(); });
 
   // Barra de admisión: se puede cerrar y queda cerrada durante la sesión
   if (announcement) {
@@ -45,10 +52,12 @@
       announcement.hidden = true;
       try { sessionStorage.setItem("sme-aviso-cerrado", "1"); } catch (e) {}
       syncHeaderHeight();
+      measure();
     });
   }
 
   syncHeaderHeight();
+  measure();
   window.addEventListener("resize", syncHeaderHeight);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncHeaderHeight);
 
@@ -427,11 +436,19 @@
       el.style.setProperty("--i", Math.min(sibs.indexOf(el), 6));
     });
 
-    var targets = items.concat(Array.prototype.slice.call(document.querySelectorAll("[data-collage]")));
+    // Collage: cada foto con su propio retraso para que se descubran en cascada
+    var collages = Array.prototype.slice.call(document.querySelectorAll("[data-collage]"));
+    collages.forEach(function (c) {
+      Array.prototype.forEach.call(c.children, function (fig, i) { fig.style.setProperty("--i", i); });
+    });
+
+    var targets = items.concat(collages);
 
     function show(el) {
       el.classList.add("is-visible");
       el.querySelectorAll("[data-count]").forEach(countUp);
+      // Terminada la animación se libera la capa reservada en la tarjeta gráfica
+      setTimeout(function () { el.classList.add("is-done"); }, 2200);
     }
 
     // Lo que ya está a la vista al cargar aparece de inmediato (con su escalonado)
