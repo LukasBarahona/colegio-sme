@@ -5,7 +5,23 @@ Hecha en HTML, CSS y JavaScript simples: no hay que instalar nada.
 
 - Figma: `https://www.figma.com/design/zu6w3bJSkXpZvYi1t4PUOJ/Colegio_SME`
 
-## Cómo verlo
+## Publicación
+
+- Sitio en línea: https://lukasbarahona.github.io/colegio-sme/
+- Repositorio: https://github.com/LukasBarahona/colegio-sme (público, publicado con GitHub Pages desde la rama `main`)
+
+Para publicar cambios, desde esta carpeta:
+
+```
+python construir.py
+git add -A
+git commit -m "Describe el cambio"
+git push
+```
+
+GitHub Pages actualiza el sitio en uno o dos minutos. Si el sitio se cambia a un dominio propio (por ejemplo www.colegiosme.cl), cambia `RUTA_PUBLICA` en `construir.py` a `"/"` y vuelve a construir.
+
+## Cómo verlo en tu computador
 
 Desde esta carpeta:
 
