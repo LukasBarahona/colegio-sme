@@ -44,7 +44,9 @@ python construir.py
 | Menú, encabezado, Accesos o pie de página (todas las páginas) | `_fuente/base.html` |
 | El contenido de una página | `_fuente/paginas/<página>.html` |
 | Título, descripción para Google, ruta de navegación o encabezado azul | El bloque `<!-- ... -->` al inicio de cada archivo de `_fuente/paginas/` |
-| Colores, tipografías y medidas | `assets/css/styles.css` |
+| Colores, tipografías y medidas (base tomada de Figma) | `assets/css/styles.css` |
+| Rediseño: encabezado azul translúcido, portada a pantalla completa, collage, animaciones | `assets/css/diseno.css` (se carga después y manda) |
+| Foto de fondo del encabezado de una página | Línea `foto:` en el bloque de datos de la página |
 | Menús, pestañas, filtros, galería, formulario y buscador | `assets/js/main.js` |
 
 Al construir también se actualiza el índice del buscador (`assets/js/indice-busqueda.js`).
@@ -83,6 +85,18 @@ Al construir también se actualiza el índice del buscador (`assets/js/indice-bu
 - [PENDIENTE] Las noticias usan la foto de la fachada como imagen de relleno.
 - [PENDIENTE] Las fotos de Misión y visión (522×573 px) y de la galería (cerca de 900 px de ancho) vienen de Figma en baja resolución. Conviene pedir los originales.
 - [PENDIENTE] El mapa del Inicio es un enlace a Google Maps.
+
+## Rediseño visual (24-11-2026)
+
+Pedido por Lukas después de la primera versión fiel a Figma:
+
+- **Encabezado:** azul del colegio y translúcido (se ve el fondo detrás), más bajo (76 px; 64 px al bajar). Se vuelve más sólido al pasar la portada. En tablet y teléfono es azul sólido, sin vidrio.
+- **Portada:** a pantalla completa, con botones «Admisión 2027» y «Conoce el colegio». En computador queda quieta y las secciones suben sobre ella.
+- **Páginas internas:** encabezado con foto de fondo, con la ruta de navegación y el título encima.
+- **Collage en el Inicio:** reemplaza la foto suelta de la comunidad; las fotos se descubren en cascada.
+- **Animaciones:** títulos, tarjetas y bloques aparecen al llegar a la vista, una sola vez, y luego quedan quietos. Las barras de cifras crecen, «+250» cuenta hacia arriba y los conectores del diagrama se dibujan. Nada se anima si la persona pidió reducir el movimiento.
+- **Estética:** todos los botones en forma de píldora, títulos con acento dorado, fondos alternos blanco y gris azulado, paneles azules con degradado y tarjetas con sombra suave.
+- [PROPUESTA] Los textos nuevos del collage («Vida escolar» y «Una comunidad que se construye cada día») y el rótulo sobre el título de la portada no están en Figma: hay que validarlos con el colegio.
 
 ## Decisiones de la programación
 

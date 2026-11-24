@@ -15,6 +15,7 @@ Uso (desde esta carpeta):
       migas: Inicio=index.html > Conócenos
       h1: Conócenos
       bajada: Historia, identidad institucional, equipo e infraestructura.
+      foto: assets/img/comunidad-escolar.jpg   (foto de fondo del encabezado; opcional)
       buscar: no                 (no incluir esta página en el buscador)
 
 - El resultado son archivos .html normales en esta carpeta. No editar esos
@@ -84,22 +85,28 @@ def migas(texto):
             items.append(f'<li><a href="{href.strip()}">{html.escape(nombre.strip())}</a></li>')
         else:
             items.append(f'<li aria-current="page">{html.escape(parte)}</li>')
-    filas = "\n        ".join(items)
+    filas = "\n            ".join(items)
     return (
-        '    <nav class="breadcrumb" aria-label="Ruta de navegación">\n'
-        "      <ol>\n"
-        f"        {filas}\n"
-        "      </ol>\n"
-        "    </nav>\n\n"
+        '        <nav class="breadcrumb" aria-label="Ruta de navegación">\n'
+        "          <ol>\n"
+        f"            {filas}\n"
+        "          </ol>\n"
+        "        </nav>\n"
     )
 
 
-def encabezado(h1, bajada):
+FOTO_ENCABEZADO = "assets/img/hero-fachada.jpg"
+
+
+def encabezado(h1, bajada, rutas, foto):
+    """Encabezado de las páginas internas: foto de fondo, ruta de navegación y título."""
     if not h1:
         return ""
     return (
         '    <section class="page-header">\n'
+        f'      <div class="page-header__bg" style="background-image: url(\'{foto or FOTO_ENCABEZADO}\')" aria-hidden="true"></div>\n'
         '      <div class="page-header__inner">\n'
+        f"{rutas}"
         f'        <h1 class="page-header__title">{h1}</h1>\n'
         f'        <p class="page-header__lead">{bajada}</p>\n'
         "      </div>\n"
@@ -134,8 +141,10 @@ def construir():
             "{{base}}": f'  <base href="{RUTA_PUBLICA}">\n' if datos.get("base") == "raiz" else "",
             "{{robots}}": '  <meta name="robots" content="noindex">\n' if datos.get("buscar") == "no" else "",
             "{{aviso}}": AVISO if datos.get("aviso") == "si" else "",
-            "{{migas}}": migas(datos.get("migas", "")),
-            "{{encabezado_pagina}}": encabezado(datos.get("h1", ""), datos.get("bajada", "")),
+            "{{migas}}": "",
+            "{{encabezado_pagina}}": encabezado(datos.get("h1", ""), datos.get("bajada", ""),
+                                                migas(datos.get("migas", "")), datos.get("foto", "")),
+            "{{clase_body}}": "is-home" if es_inicio else "is-inner",
             "{{contenido}}": contenido.rstrip("\n"),
             "{{scripts}}": '  <script src="assets/js/indice-busqueda.js" defer></script>\n'
             if datos.get("indice") == "si" else "",

@@ -10,8 +10,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Merriweather:opsz,wght@18..144,300..700&display=swap">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/diseno.css">
+  <script>
+    /* Prepara las animaciones al aparecer (salvo si la persona pidió reducir el movimiento).
+       Si main.js no alcanza a cargar, todo se muestra igual a los 2,5 s. */
+    (function (d) {
+      if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      d.classList.add("js-motion");
+      setTimeout(function () { if (!window.SME_MOTION) d.classList.remove("js-motion"); }, 2500);
+    })(document.documentElement);
+  </script>
 </head>
-<body>
+<body class="is-home">
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
   <!-- ===== Encabezado fijo: barra de admisión + navegación ===== -->
@@ -106,18 +116,28 @@
   </header>
 
   <main id="contenido">
-<!-- ===== Portada ===== -->
-    <section class="hero">
-      <img class="hero__img" src="assets/img/hero-fachada.jpg" width="1942" height="809" alt="Fachada del Colegio Santa Margarita de Escocia en Ñuñoa">
+<!-- ===== Portada (pantalla completa) ===== -->
+    <section class="hero" id="portada">
+      <div class="hero__media">
+        <img class="hero__img" src="assets/img/hero-fachada.jpg" width="1942" height="809" alt="Fachada del Colegio Santa Margarita de Escocia en Ñuñoa" fetchpriority="high">
+      </div>
       <div class="hero__content">
         <span class="hero__accent" aria-hidden="true"></span>
+        <p class="hero__eyebrow">Colegio Santa Margarita de Escocia · Ñuñoa</p>
         <h1 class="hero__title">Educación integral, inclusiva y con propósito</h1>
         <p class="hero__text">Enseñanza Media de 1.º a 4.º medio · Formación científico-humanista · Integración de estudiantes con NEE</p>
+        <div class="hero__actions">
+          <a class="btn btn--gold" href="admision.html">Admisión 2027</a>
+          <a class="btn btn--ghost" href="conocenos.html">Conoce el colegio</a>
+        </div>
       </div>
+      <a class="hero__scroll" href="#inicio-contenido" aria-label="Bajar al contenido">
+        <span class="hero__scroll-line" aria-hidden="true"></span>
+      </a>
     </section>
 
     <!-- ===== Accesos rápidos ===== -->
-    <section class="section">
+    <section class="section section--first" id="inicio-contenido">
       <div class="container">
         <h2 class="section__title">Accesos rápidos</h2>
         <p class="section__lead">Tareas frecuentes para familias, estudiantes y equipo escolar.</p>
@@ -135,7 +155,7 @@
     </section>
 
     <!-- ===== Información importante de la semana ===== -->
-    <section class="section">
+    <section class="section section--soft">
       <div class="container">
         <h2 class="section__title">Información importante de la semana</h2>
         <div class="panel panel--notice">
@@ -172,15 +192,31 @@
       </div>
     </section>
 
-    <!-- ===== Imagen comunidad escolar ===== -->
-    <section class="section">
+    <!-- ===== Comunidad en collage ===== -->
+    <section class="section section--collage">
       <div class="container">
-        <img class="community-img" src="assets/img/comunidad-escolar.jpg" width="1205" height="677" alt="Actividad de la comunidad escolar en el patio del colegio" loading="lazy">
+        <div class="collage-intro">
+          <div>
+            <p class="eyebrow">Vida escolar</p>
+            <h2 class="section__title">Una comunidad que se construye cada día</h2>
+          </div>
+          <div class="collage-intro__side">
+            <p class="section__lead">Momentos que construyen nuestra comunidad escolar.</p>
+            <a class="btn btn--ghost" href="comunidad.html#galeria">Ver la galería</a>
+          </div>
+        </div>
+        <div class="collage" data-collage>
+          <figure class="collage__item collage__item--a"><img src="assets/img/comunidad-escolar.jpg" width="1205" height="677" alt="Actividad de la comunidad escolar en el patio del colegio" loading="lazy"></figure>
+          <figure class="collage__item collage__item--b"><img src="assets/img/galeria-celebracion.jpg" width="505" height="681" alt="Celebración comunitaria en el colegio" loading="lazy"></figure>
+          <figure class="collage__item collage__item--c"><img src="assets/img/galeria-identidad.jpg" width="900" height="678" alt="Estudiantes en una actividad de identidad estudiantil" loading="lazy"></figure>
+          <figure class="collage__item collage__item--d"><img src="assets/img/comunidad-estudiantil.jpg" width="522" height="573" alt="Estudiantes del colegio durante una actividad escolar" loading="lazy"></figure>
+          <figure class="collage__item collage__item--e"><img src="assets/img/galeria-salida.jpg" width="903" height="671" alt="Estudiantes durante una salida pedagógica" loading="lazy"></figure>
+        </div>
       </div>
     </section>
 
     <!-- ===== Admisión 2027 ===== -->
-    <section class="section">
+    <section class="section section--soft">
       <div class="container">
         <h2 class="section__title">Admisión 2027</h2>
         <div class="panel panel--admission">
@@ -198,7 +234,7 @@
         <div class="grid grid--2">
           <div class="metric">
             <div class="metric__content">
-              <p class="metric__value">+250 estudiantes</p>
+              <p class="metric__value">+<span data-count="250">250</span> estudiantes</p>
               <p class="metric__label">En nuestra institución</p>
             </div>
             <div class="metric__bars" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -215,7 +251,7 @@
     </section>
 
     <!-- ===== Documentos destacados ===== -->
-    <section class="section">
+    <section class="section section--soft">
       <div class="container">
         <h2 class="section__title">Documentos destacados</h2>
         <div class="grid grid--2">

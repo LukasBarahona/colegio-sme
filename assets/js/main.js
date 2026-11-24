@@ -12,10 +12,28 @@
   /* =======================================================
      Encabezado fijo
      ======================================================= */
-  function syncHeaderHeight() {
-    var h = headerMain.offsetHeight + (announcement && !announcement.hidden ? announcement.offsetHeight : 0);
-    root.style.setProperty("--header-h", h + "px");
+  // Alto del encabezado sin achicar (--hdr-h en diseno.css) + barra de admisión.
+  // Se usa para dejar espacio arriba en la portada y en los encabezados de página.
+  function cssPx(name, fallback) {
+    var v = parseFloat(getComputedStyle(root).getPropertyValue(name));
+    return isNaN(v) ? fallback : v;
   }
+  function syncHeaderHeight() {
+    var main = cssPx("--hdr-h", headerMain.offsetHeight);
+    var aviso = announcement && !announcement.hidden ? cssPx("--aviso-h", announcement.offsetHeight) : 0;
+    root.style.setProperty("--header-h", (main + aviso) + "px");
+  }
+
+  // Al bajar, el encabezado se achica y se vuelve más sólido después de la portada
+  var cover = document.querySelector(".hero, .page-header");
+  function onScroll() {
+    var y = window.scrollY || window.pageYOffset;
+    header.classList.toggle("is-scrolled", y > 24);
+    var limit = cover ? cover.offsetHeight - header.offsetHeight : 0;
+    header.classList.toggle("is-solid", y > Math.max(limit, 24));
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 
   // Barra de admisión: se puede cerrar y queda cerrada durante la sesión
   if (announcement) {
@@ -373,4 +391,66 @@
      ======================================================= */
   var year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
+
+  /* =======================================================
+     Animaciones al aparecer en pantalla
+     Cada elemento aparece una sola vez y luego queda quieto.
+     La lista es la misma que en diseno.css.
+     ======================================================= */
+  var REVELAR = ".section__title, .section__lead, .section__note, .section__body, .eyebrow, .subsection__title, " +
+    ".grid > *, .doc-list > *, .event-list > *, .steps > *, .soft-grid > *, .result-list > *, .gallery > *, " +
+    ".contact-grid > *, .panel, .resource-block, .process__step, .data-table, .alert, .info-box, .mv__block, .mv__img, " +
+    ".filters, .level-hub__intro, .cta, .collage-intro__side, .search-bar--wide, .btn--block, .article-img, .doc-card--single";
+
+  function countUp(el) {
+    var target = parseInt(el.getAttribute("data-count"), 10);
+    if (isNaN(target)) return;
+    var start = null, dur = 1400;
+    function step(t) {
+      if (start === null) start = t;
+      var p = Math.min(1, (t - start) / dur);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    el.textContent = "0";
+    requestAnimationFrame(step);
+  }
+
+  if (root.classList.contains("js-motion")) {
+    window.SME_MOTION = true;
+    var items = Array.prototype.slice.call(document.querySelectorAll(REVELAR))
+      .filter(function (el) { return !el.closest(".site-header, .page-header, .hero, .footer"); });
+
+    // Retraso escalonado entre hermanos (máximo 6 pasos)
+    items.forEach(function (el) {
+      var sibs = Array.prototype.filter.call(el.parentNode.children, function (s) { return items.indexOf(s) > -1; });
+      el.style.setProperty("--i", Math.min(sibs.indexOf(el), 6));
+    });
+
+    var targets = items.concat(Array.prototype.slice.call(document.querySelectorAll("[data-collage]")));
+
+    function show(el) {
+      el.classList.add("is-visible");
+      el.querySelectorAll("[data-count]").forEach(countUp);
+    }
+
+    // Lo que ya está a la vista al cargar aparece de inmediato (con su escalonado)
+    var vh = window.innerHeight;
+    targets = targets.filter(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.width && r.top < vh * 0.94 && r.bottom > 0) { show(el); return false; }
+      return true;
+    });
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+      targets.forEach(function (el) { io.observe(el); });
+    } else {
+      targets.forEach(show);
+    }
+  }
 })();

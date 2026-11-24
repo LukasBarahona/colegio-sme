@@ -10,8 +10,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Merriweather:opsz,wght@18..144,300..700&display=swap">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/diseno.css">
+  <script>
+    /* Prepara las animaciones al aparecer (salvo si la persona pidió reducir el movimiento).
+       Si main.js no alcanza a cargar, todo se muestra igual a los 2,5 s. */
+    (function (d) {
+      if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      d.classList.add("js-motion");
+      setTimeout(function () { if (!window.SME_MOTION) d.classList.remove("js-motion"); }, 2500);
+    })(document.documentElement);
+  </script>
 </head>
-<body>
+<body class="is-inner">
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
   <!-- ===== Encabezado fijo: barra de admisión + navegación ===== -->
@@ -98,15 +108,15 @@
   </header>
 
   <main id="contenido">
-    <nav class="breadcrumb" aria-label="Ruta de navegación">
-      <ol>
-        <li><a href="index.html">Inicio</a></li>
-        <li aria-current="page">Estudiantes</li>
-      </ol>
-    </nav>
-
     <section class="page-header">
+      <div class="page-header__bg" style="background-image: url('assets/img/galeria-identidad.jpg')" aria-hidden="true"></div>
       <div class="page-header__inner">
+        <nav class="breadcrumb" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="index.html">Inicio</a></li>
+            <li aria-current="page">Estudiantes</li>
+          </ol>
+        </nav>
         <h1 class="page-header__title">Estudiantes</h1>
         <p class="page-header__lead">Reglamentos de evaluación, convivencia escolar y postulación a becas.</p>
       </div>

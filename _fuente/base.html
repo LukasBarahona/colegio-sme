@@ -10,8 +10,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Merriweather:opsz,wght@18..144,300..700&display=swap">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/diseno.css">
+  <script>
+    /* Prepara las animaciones al aparecer (salvo si la persona pidió reducir el movimiento).
+       Si main.js no alcanza a cargar, todo se muestra igual a los 2,5 s. */
+    (function (d) {
+      if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      d.classList.add("js-motion");
+      setTimeout(function () { if (!window.SME_MOTION) d.classList.remove("js-motion"); }, 2500);
+    })(document.documentElement);
+  </script>
 </head>
-<body>
+<body class="{{clase_body}}">
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
   <!-- ===== Encabezado fijo: barra de admisión + navegación ===== -->
