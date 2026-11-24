@@ -1,0 +1,59 @@
+<!--
+titulo: Contacto
+descripcion: Contacto del Colegio Santa Margarita de Escocia, Ñuñoa: formulario para consultas generales y de admisión.
+migas: Inicio=index.html > Contacto
+h1: Contacto
+bajada: Canal institucional para consultas generales y admisión.
+-->
+    <!-- ===== Formulario de contacto ===== -->
+    <section class="section section--inner">
+      <div class="container">
+        <h2 class="section__title">Formulario de contacto</h2>
+        <p class="section__note">Los campos incluyen estados de error y éxito en el sistema.</p>
+        <div class="contact-grid">
+          <form class="form-card" id="contact-form" novalidate data-destino="info@colegiosme.cl">
+            <h3 class="form-card__title">Contacto</h3>
+
+            <div class="field">
+              <label class="field__label" for="c-nombre">Nombre</label>
+              <input class="field__input" id="c-nombre" name="nombre" type="text" placeholder="Escribe tu nombre" autocomplete="name" required>
+              <p class="field__error" id="c-nombre-error" hidden>Escribe tu nombre.</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="c-correo">Correo electrónico</label>
+              <input class="field__input" id="c-correo" name="correo" type="email" placeholder="nombre@ejemplo.cl" autocomplete="email" required>
+              <p class="field__error" id="c-correo-error" hidden>Escribe un correo válido, por ejemplo nombre@ejemplo.cl.</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="c-motivo">Motivo de contacto</label>
+              <span class="select select--field">
+                <select class="field__input" id="c-motivo" name="motivo" required>
+                  <option value="">Selecciona una opción</option>
+                  <option>Consulta general</option>
+                  <option>Admisión</option>
+                  <option>Matrícula</option>
+                  <option>Otro</option>
+                </select>
+              </span>
+              <p class="field__error" id="c-motivo-error" hidden>Selecciona un motivo.</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="c-mensaje">Mensaje</label>
+              <textarea class="field__input field__input--area" id="c-mensaje" name="mensaje" rows="3" placeholder="Escribe tu consulta" required></textarea>
+              <p class="field__error" id="c-mensaje-error" hidden>Escribe tu consulta.</p>
+            </div>
+
+            <button class="btn" type="submit">Enviar mensaje</button>
+            <p class="form-card__status" id="contact-status" role="status" hidden></p>
+          </form>
+
+          <div class="panel panel--map panel--contact">
+            <h3 class="panel__title">Ubicación y atención</h3>
+            <p class="panel__text">[DIRECCIÓN, HORARIO, TELÉFONO Y CORREO POR VALIDAR]</p>
+          </div>
+        </div>
+      </div>
+    </section>

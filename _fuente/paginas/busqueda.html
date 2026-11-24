@@ -1,0 +1,40 @@
+<!--
+titulo: Resultados de búsqueda
+descripcion: Busca información en el sitio del Colegio Santa Margarita de Escocia.
+migas: Inicio=index.html > Búsqueda
+h1: <span data-search-title>Resultados de búsqueda</span>
+bajada: <span data-search-lead>Consulta y selección de resultados del sitio.</span>
+buscar: no
+indice: si
+-->
+    <!-- ===== Buscar ===== -->
+    <section class="section section--inner">
+      <div class="container">
+        <h2 class="section__title" data-search-heading>Buscar</h2>
+        <form class="search-bar search-bar--wide" action="busqueda.html" role="search">
+          <label class="sr-only" for="q-pagina">Buscar en el sitio</label>
+          <input id="q-pagina" name="q" type="search" placeholder="Escribe lo que necesitas encontrar…" autocomplete="off">
+          <button class="btn" type="submit">Buscar</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== Resultados (P13) ===== -->
+    <section class="section section--inner" data-search-results hidden>
+      <div class="container">
+        <h2 class="section__title">Resultados</h2>
+        <p class="section__note" data-search-count></p>
+        <div class="result-list" data-search-list></div>
+      </div>
+    </section>
+
+    <!-- ===== Sin coincidencias (P15) ===== -->
+    <section class="section section--inner" data-search-empty hidden>
+      <div class="container">
+        <h2 class="section__title">Sin coincidencias</h2>
+        <div class="panel panel--card panel--tall">
+          <h3 class="panel__title">Prueba con otra búsqueda</h3>
+          <p class="panel__text">Revisa la escritura, utiliza menos palabras o explora <a href="informacion-util.html">Información Útil</a>.</p>
+        </div>
+      </div>
+    </section>

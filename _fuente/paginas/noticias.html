@@ -1,0 +1,56 @@
+<!--
+titulo: Noticias
+descripcion: Noticias y publicaciones del Colegio Santa Margarita de Escocia, filtradas por año y categoría.
+menu: comunidad
+migas: Inicio=index.html > Comunidad=comunidad.html > Noticias
+h1: Noticias
+bajada: Publicaciones vigentes separadas del archivo histórico.
+-->
+    <!-- ===== Filtrar noticias ===== -->
+    <section class="section section--inner">
+      <div class="container">
+        <h2 class="section__title">Filtrar noticias</h2>
+        <div class="filters" data-filters="noticias">
+          <label class="select">
+            <span class="sr-only">Filtrar por año</span>
+            <select data-filter="anio">
+              <option value="">Filtrar por año</option>
+            </select>
+          </label>
+          <label class="select">
+            <span class="sr-only">Filtrar por categoría</span>
+            <select data-filter="categoria">
+              <option value="">Filtrar por categoría</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Últimas publicaciones ===== -->
+    <section class="section section--inner">
+      <div class="container">
+        <h2 class="section__title">Últimas publicaciones</h2>
+        <div class="grid grid--3" data-filter-list="noticias">
+          <a class="news-card" href="noticia.html" data-anio="" data-categoria="">
+            <img class="news-card__img" src="assets/img/noticia-placeholder.jpg" width="312" height="180" alt="" loading="lazy">
+            <span class="news-card__date">[FECHA POR CONFIRMAR]</span>
+            <span class="news-card__title">[TÍTULO POR VALIDAR]</span>
+            <span class="news-card__summary">Resumen breve del contenido institucional pendiente de validación.</span>
+          </a>
+          <a class="news-card" href="noticia.html" data-anio="" data-categoria="">
+            <img class="news-card__img" src="assets/img/noticia-placeholder.jpg" width="312" height="180" alt="" loading="lazy">
+            <span class="news-card__date">[FECHA POR CONFIRMAR]</span>
+            <span class="news-card__title">[TÍTULO POR VALIDAR]</span>
+            <span class="news-card__summary">Resumen breve del contenido institucional pendiente de validación.</span>
+          </a>
+          <a class="news-card" href="noticia.html" data-anio="" data-categoria="">
+            <img class="news-card__img" src="assets/img/noticia-placeholder.jpg" width="312" height="180" alt="" loading="lazy">
+            <span class="news-card__date">[FECHA POR CONFIRMAR]</span>
+            <span class="news-card__title">[TÍTULO POR VALIDAR]</span>
+            <span class="news-card__summary">Resumen breve del contenido institucional pendiente de validación.</span>
+          </a>
+        </div>
+        <p class="filter-empty" data-filter-empty="noticias" hidden>No hay publicaciones para los filtros elegidos.</p>
+      </div>
+    </section>
